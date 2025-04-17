@@ -1,7 +1,9 @@
 from pymem import Pymem
 import pymem.process as process
 from os import _exit as exitfunc
-
+import warnings
+def DisDeprecation():
+    warnings.simplefilter("ignore", DeprecationWarning)
 def GetRDR2Process():
     try:
         return Pymem("RDR2.exe")
@@ -17,7 +19,8 @@ def Inject(nameofdll : str):
     rdr2_exe = GetRDR2Process()
     if(rdr2_exe.base_address == 0):
         print("Not Founded Base Address of RDR2.exe")
-    process.inject_dll_from_path(GetRDR2_ProcessHandle(), bytes(nameofdll, "utf-8"))
+    DisDeprecation()
+    process.inject_dll(GetRDR2_ProcessHandle(), bytes(nameofdll, "utf-8"))
 
 def Main():
     dllpath = input("Please Write You're DLL Path: ")
